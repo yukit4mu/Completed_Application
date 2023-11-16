@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Models\Person;
+
+use App\Http\Controllers\AuthorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,4 @@ use App\Models\Person;
 |
 */
 
-Route::get('/softdelete', function () {
-    Person::find(1)->delete();
-});
+Route::get('/', [AuthorController::class, 'index']);
