@@ -79,4 +79,15 @@ class AuthorController extends Controller
         //取得してきた元データにアクセスして update($form) を呼び出し、フォームから送信されたデータでモデルを更新します。Eloquent は自動的に主キーを用いて対象のレコードを特定し、指定されたデータで更新します。
         return redirect('/');
     }
+
+    public function delete(Request $request)
+    {
+        $author = Author::find($request->id);
+        return view('delete', ['author' => $author]);
+    }
+    public function remove(Request $request)
+    {
+        Author::find($request->id)->delete();
+        return redirect('/');
+    }
 }
