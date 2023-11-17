@@ -52,7 +52,7 @@ class AuthorController extends Controller
     //つまり、bladeファイル内のinputタグのname属性がテーブルのカラム名と一致していれば、createメソッドの引数にrequest->all()の値を代入することで、そのままテーブルに保存することができます。
 
     // ↓データ編集ページの表示。基本的にidを元に更新するデータを取得します。
-    public function edit(Request $request)//HTTPリクエストを受け取るために $request パラメータを使用しています。(HTTPリクエストをもとに処理する時の作法！)
+    public function edit(Request $request) //HTTPリクエストを受け取るために $request パラメータを使用しています。(HTTPリクエストをもとに処理する時の作法！)
     {
         // ↓指定された id に対応する Author モデルのデータを取得
         $author = Author::find($request->id);
@@ -70,7 +70,7 @@ class AuthorController extends Controller
     //↓このアクションは、フォームから送信されたデータを使って Author モデルのレコードを更新し、最終的にはトップページにリダイレクトするものです。
     public function update(Request $request)
     {
-        $form = $request->all();//フォームのデータ全部取ってきて変数入れる
+        $form = $request->all(); //フォームのデータ全部取ってきて変数入れる
         unset($form['_token']);
         //CSRF（Cross-Site Request Forgery）トークンはフォームのセキュリティを向上させるためのもので、通常、フォーム送信時に含まれます。しかし、データベースに保存する必要はないので、unset 関数を使用して $form から除外します
         Author::find($request->id)->update($form);
@@ -89,5 +89,26 @@ class AuthorController extends Controller
     {
         Author::find($request->id)->delete();
         return redirect('/');
+    }
+    public function find()
+    {
+        return view('find', ['input' => '']);
+    }
+    public function search(Request $request)
+    {
+        $item = Author::where('name', 'LIKE', "%{$request->input}%")->first();
+        // $item = Author::where('name', $request->input)->first();
+        $param = [
+            'input' => $request->input,
+            'item' => $item
+        ];
+        return view('find', $param);
+    }
+    public function bind(Author $author)
+    {
+        $data = [
+            'item' => $author,
+        ];
+        return view('author.binds', $data);
     }
 }
