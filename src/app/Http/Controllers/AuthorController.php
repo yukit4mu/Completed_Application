@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Author;
 // まず、use ステートメントがあります。これは、App\Models ネームスペース内の Author モデルを使うための宣言です。（AuthorControllerとAuthorモデルを連携させるイメージ）
+use App\Http\Requests\AuthorRequest;
 
 class AuthorController extends Controller
 {
@@ -30,7 +31,7 @@ class AuthorController extends Controller
     }
 
     // ↓データ追加機能
-    public function create(Request $request)
+    public function create(AuthorRequest $request)
     {
         $form = $request->all();
         Author::create($form);
@@ -111,4 +112,9 @@ class AuthorController extends Controller
         ];
         return view('author.binds', $data);
     }
+    public function verror()//今更だけど黄色が自作メソッドで青が用意されてるメソッドか
+    {
+        return view('verror');
+    }
+    
 }

@@ -26,3 +26,4 @@ Route::get('/find', [AuthorController::class, 'find']);
 Route::post('/find', [AuthorController::class, 'search']);
 Route::get('/author/{author}', [AuthorController::class, 'bind']);
 //この {author}の数字とAuthorモデルのidが合致するレコードが結びついて取り出されます。
+Route::get('/verror', [AuthorController::class, 'verror']);
