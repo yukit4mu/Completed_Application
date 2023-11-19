@@ -13,7 +13,8 @@ class AuthorController extends Controller
     public function index()
     {
         //index メソッドは、HTTP GETリクエストが送信されたときに呼び出されるアクションメソッドです。(postはstoreメソッドに入れるみたい。。)
-        $authors = Author::all();
+        // $authors = Author::all(); 最初のやつ
+        $authors = Author::Paginate(4);
         return view('index', ['authors' => $authors]);
         //またAuthor::all() は、Author モデルに対して呼び出される all メソッドであり、これは authors テーブルから全てのレコードを取得します。取得した著者のデータは、$authors 変数に格納されています。
 
@@ -116,5 +117,18 @@ class AuthorController extends Controller
     {
         return view('verror');
     }
-    
+
+    public function relate(Request $request) //追記
+    {
+        $hasItems = Author::has('book')->get();
+        $noItems = Author::doesntHave('book')->get();
+        $param = ['hasItems' => $hasItems, 'noItems' => $noItems];
+        return view('author.index', $param);
+    }
+
+    public function books()
+    {
+        return $this->hasMany('App\Models\Book');
+    }
+
 }

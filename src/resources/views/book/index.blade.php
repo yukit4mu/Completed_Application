@@ -15,27 +15,20 @@
         background-color: #EEEEEE;
         text-align: center;
     }
-
-    svg.w-5.h-5 {
-        /*paginateメソッドの矢印の大きさ調整のために追加*/
-        width: 30px;
-        height: 30px;
-    }
 </style>
-@section('title', 'index.blade.php')
+@section('title', 'book.index.blade.php')
 
 @section('content')
 <table>
     <tr>
-        <th>Data</th>
+        <th>Books</th>
     </tr>
-    @foreach ($authors as $author)
+    @foreach ($items as $item)
     <tr>
         <td>
-            {{$author->getDetail()}}
+            {{$item->getTitle()}}
         </td>
     </tr>
     @endforeach
 </table>
-{{ $authors->links() }}
 @endsection
